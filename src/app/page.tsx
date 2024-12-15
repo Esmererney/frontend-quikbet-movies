@@ -1,52 +1,33 @@
-const people = [
-  {
-    name: "Leslie Alexander",
-    role: "Co-Founder / CEO",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  // More people...
-];
+"use client";
+
+import { useState } from "react";
+import RootLayout from "./layout";
+import { Movie } from "../types/movie"
+import SearchMovie from "../component/SearchMovie";
+import Movies from "../component/Movie"; // Componente que muestra las películas
 
 export default function Example(): JSX.Element {
+  const [query, setQuery] = useState<string>("");
+  const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
+
+  // Manejadores para actualizar el estado desde `SearchMovie`
+  const handleSearch = (newQuery: string) => setQuery(newQuery);
+  const handleGenreSelect = (genreId: number | null) => setSelectedGenre(genreId);
+
+  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
+
   return (
-    <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto grid max-w-7xl gap-20 px-6 lg:px-8 xl:grid-cols-3">
-        <div className="max-w-xl">
-          <h2 className="text-pretty text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-            Meet our leadership
-          </h2>
-          <p className="mt-6 text-lg/8 text-gray-600">
-            We’re a dynamic group of individuals who are passionate about what
-            we do and dedicated to delivering the best results for our clients.
-          </p>
+    <RootLayout>
+      <div className="bg-gray-100 min-h-screen flex flex-row ">
+         {/* Contenedor del contenido dinámico, 30% */}
+        <div className="w-1/4 sticky left-0 text-black p-4 overflow-y-auto bg-neutral-800">
+          <SearchMovie onSearch={handleSearch} onGenreChange={handleGenreSelect} />
         </div>
-        <ul
-          role="list"
-          className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2
-        "
-        >
-          {people.map((person) => (
-            <li key={person.name}>
-              <div className="flex items-center gap-x-6">
-                <img
-                  alt=""
-                  src={person.imageUrl}
-                  className="size-16 rounded-full"
-                />
-                <div>
-                  <h3 className="text-base/7 font-semibold tracking-tight text-gray-900">
-                    {person.name}
-                  </h3>
-                  <p className="text-sm/6 font-semibold text-indigo-600">
-                    {person.role}
-                  </p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {/* Contenedor del contenido dinámico, 70% */}
+        <div className="w-3/4 p-4 overflow-auto bg-neutral-600">
+          <Movies query={query} genreId={selectedGenre} />
+        </div>
       </div>
-    </div>
+    </RootLayout>
   );
 }
