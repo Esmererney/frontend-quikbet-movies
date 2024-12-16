@@ -1,9 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import Head from "next/head"
+import Head from "next/head";
 import NavBar from "../component/NavBar";
-import Carousel from "../component/Carousel"; // Componente que muestra el banner
-
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,17 +14,18 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): JSX.Element {
   return (
     <html lang="en">
       <Head>
         <title>Quikbet Movies</title>
       </Head>
-        <body className={inter.className}>
+      <body className={inter.className}>
+        <main>
           <NavBar />
-          <Carousel />
           {children}
-        </body>
+        </main>
+      </body>
     </html>
   );
 }
