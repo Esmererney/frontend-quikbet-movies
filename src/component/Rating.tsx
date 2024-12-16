@@ -2,11 +2,12 @@ import React from "react";
 
 // Definición de la interfaz para las propiedades del componente RatingCircle.
 interface RatingCircleProps {
-  rating: number;
+  rating: number; // Calificación numérica de la película.
+  variant?: "default" | "large"; // Nueva propiedad para definir el tamaño del círculo.
 }
 
 // Función para determinar el color según la calificación.
-const getColorByRating = (rating: number): "stroke-green-500" | "stroke-yellow-500" | "stroke-red-500" => {
+const getColorByRating = (rating: number): string => {
   // Si la calificación es mayor o igual a 7, se devuelve un color verde.
   if (rating >= 7) return "stroke-green-500";
   // Si la calificación está entre 4 y 6, se devuelve un color amarillo.
@@ -16,15 +17,21 @@ const getColorByRating = (rating: number): "stroke-green-500" | "stroke-yellow-5
 };
 
 // Componente funcional RatingCircle que recibe la propiedad rating.
-const RatingCircle: React.FC<RatingCircleProps> = ({ rating }) => {
+const RatingCircle: React.FC<RatingCircleProps> = ({
+  rating,
+  variant = "default",
+}) => {
   // Calculamos el porcentaje de la calificación (de 0 a 100).
   const ratingPercentage = (rating / 10) * 100;
   // Determinamos la clase de color según la calificación.
   const colorClass = getColorByRating(rating);
 
+  // Aplicar clases de tamaño según la propiedad `variant`.
+  const sizeClass = variant === "large" ? "w-20 h-20" : "w-6 h-6";
+
   return (
-    // Contenedor principal del círculo de calificación con fondo blanco y bordes redondeados.
-    <div className="relative w-6 h-6 bg-white rounded-full">
+    // Contenedor principal del círculo de calificación con fondo redondeado.
+    <div className={`relative ${sizeClass} bg-white rounded-full`}>
       <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 36 36">
         {/* Círculo de fondo gris claro que representa el 100% del progreso */}
         <circle
@@ -58,13 +65,12 @@ const RatingCircle: React.FC<RatingCircleProps> = ({ rating }) => {
           y="50%" // Centra el texto verticalmente.
           textAnchor="middle" // Alineación horizontal del texto.
           dy=".3em" // Ajusta la posición vertical del texto.
-          className="text-xxs font-semibold text-gray-900 bg-white"
+          className="font-semibold text-gray-900 bg-white text-xxs"
         >
-          {Math.round(ratingPercentage)}% {/* Muestra el porcentaje sin decimales */}
+          {Math.round(ratingPercentage)} {"%"}
         </text>
       </svg>
     </div>
-
   );
 };
 

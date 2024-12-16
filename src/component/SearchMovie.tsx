@@ -22,23 +22,27 @@ export default function Search({
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMWFiYTQ4ZmVhZmYxNzc1MGJlNTI5YmJmNGNkYTNlZSIsIm5iZiI6MTczNDAyNDAyMC40NzgwMDAyLCJzdWIiOiI2NzViMWI1NGM3ZDNmMmY5M2UxMzJjNjgiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.aCifoKzp3CXenqMLcIvouanza2P6VxKEcrCexflnhhk",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMWFiYTQ4ZmVhZmYxNzc1MGJlNTI5YmJmNGNkYTNlZSIsIm5iZiI6MTczNDAyNDAyMC40NzgwMDAyLCJzdWIiOiI2NzViMWI1NGM3ZDNmMmY5M2UxMzJjNjgiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.aCifoKzp3CXenqMLcIvouanza2P6VxKEcrCexflnhhk",
       },
     };
 
     fetch(url, options)
       .then((res) => res.json())
-      .then((data) => setGenres(data.genres || []))
-      .catch((err) => console.error(err));
+      .then((data: { genres: Gender[] }) => setGenres(data.genres || []));
   }, []);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
     const value = event.target.value;
     setQuery(value);
     onSearch(value); // Notificar al componente padre
   };
 
-  const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleGenreChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ): void => {
     const value = parseInt(event.target.value, 10);
     const genreId = isNaN(value) ? null : value;
     setSelectedGenre(genreId);
@@ -48,7 +52,9 @@ export default function Search({
   return (
     <div className="p-4">
       <div className="mb-4">
-        <h2 className="text-2xl font-semibold text-left mb-4 text-white">Search</h2>
+        <h2 className="text-2xl font-semibold text-left mb-4 text-white">
+          Search
+        </h2>
         <input
           type="text"
           placeholder="Search for a movie..."
@@ -56,12 +62,16 @@ export default function Search({
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <h3 className="text-2xl mt-4 font-semibold text-left mb-4 text-white">Genre</h3>
+        <h3 className="text-2xl mt-4 font-semibold text-left mb-4 text-white">
+          Genre
+        </h3>
         <select
           onChange={handleGenreChange}
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="" className="text-white">Select a genre</option>
+          <option value="" className="text-white">
+            Select a genre
+          </option>
           {genres.map((genre) => (
             <option key={genre.id} value={genre.id}>
               {genre.name}

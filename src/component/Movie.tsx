@@ -9,7 +9,15 @@ interface MoviesProps {
   genreId: number | null;
 }
 
-export default function Movies({ query, genreId }: Readonly<MoviesProps>): JSX.Element {
+interface MovieApiResponse {
+  results: Movie[];
+  total_pages: number;
+}
+
+export default function Movies({
+  query,
+  genreId,
+}: Readonly<MoviesProps>): JSX.Element {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1); // Página actual
@@ -29,11 +37,11 @@ export default function Movies({ query, genreId }: Readonly<MoviesProps>): JSX.E
     setLoading(true);
     try {
       const response = await fetch(url, options);
-      const data = await response.json();
+      const data: MovieApiResponse = await response.json();
       setMovies(data.results || []);
-      setTotalPages(data.total_pages); // Guardar el total de páginas
+      setTotalPages(Number(data.total_pages)); // Guardar el total de páginas
     } catch (error) {
-      console.error("Error fetching movies:", error);
+      // console.error("Error fetching movies:", error);
     } finally {
       setLoading(false);
     }

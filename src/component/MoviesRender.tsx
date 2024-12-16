@@ -1,23 +1,29 @@
 import RatingCircle from "./Rating";
 import FavoriteButton from "./FavoriteButton";
+import Link from "next/link";
+
 interface Movie {
-    id: number;
-    title: string;
-    poster_path: string;
-    release_date: string;
-    vote_average: number;
+  id: number;
+  title: string;
+  poster_path: string;
+  release_date: string;
+  vote_average: number;
 }
-  
+
 interface MoviesRenderProps {
   movies: Movie[];
 }
-  
-  export default function MoviesRender({
-    movies,
-  }: Readonly<MoviesRenderProps>): JSX.Element {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {movies.map((movie) => (
+
+export default function MoviesRender({
+  movies,
+}: Readonly<MoviesRenderProps>): JSX.Element {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {movies.map((movie) => (
+        <Link
+          key={`movie-${movie.id}`}
+          href={`/movie/${movie.id}?id=${movie.id}`}
+        >
           <div
             key={movie.id}
             className="bg-neutral-800 shadow-lg rounded-lg overflow-hidden"
@@ -46,8 +52,8 @@ interface MoviesRenderProps {
               </div>
             </div>
           </div>
-        ))}
-      </div>
-    );
-  }
-  
+        </Link>
+      ))}
+    </div>
+  );
+}
