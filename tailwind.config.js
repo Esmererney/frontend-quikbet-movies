@@ -8,7 +8,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        'xxs': '10px',  // Tamaño personalizado más pequeño que 10px
+      },
+    },
   },
   plugins: [],
 };
