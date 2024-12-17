@@ -75,33 +75,27 @@ export default function Movies({
   };
 
   return (
-    <div className="p-4">
-      {loading ? (
-        <p className="text-center text-gray-500">Loading...</p>
-      ) : (
-        <>
-          <MoviesRender movies={movies} />
-          <div className="flex justify-between items-center mt-4">
-            <button
-              onClick={goToPreviousPage}
-              disabled={page === 1}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400"
-            >
-              Previous
-            </button>
-            <span>
-              Page {page} of {totalPages}
-            </span>
-            <button
-              onClick={goToNextPage}
-              disabled={page === totalPages}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400"
-            >
-              Next
-            </button>
-          </div>
-        </>
-      )}
+    <div className="p-5">
+      <MoviesRender movies={movies} isLoading={loading} />
+      <div className="flex justify-between items-center mt-8">
+        <button
+          onClick={goToPreviousPage}
+          disabled={page === 1}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400 hover:bg-blue-300"
+        >
+          Previous
+        </button>
+        <span className="text-yellow-400">
+          Page {page} of {totalPages}
+        </span>
+        <button
+          onClick={goToNextPage}
+          disabled={page === totalPages}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400 hover:bg-blue-300"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

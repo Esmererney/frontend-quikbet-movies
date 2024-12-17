@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "test": "jest"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

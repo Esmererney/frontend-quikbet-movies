@@ -9,12 +9,13 @@ import FavoriteButton from "../../../component/FavoriteButton";
 import Image from "next/image";
 import { PlayIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Skeleton from "../../../component/Skeleton"; // Importar el skeleton loader
 
 const MovieDetail = (): JSX.Element => {
   const [movie, setMovie] = useState<Movie | null>(null);
   const searchParams = useSearchParams();
   const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true); // Estado de carga
   const id = searchParams.get("id");
 
   useEffect(() => {
@@ -44,19 +45,31 @@ const MovieDetail = (): JSX.Element => {
       );
       const data = await response.json();
       setRecommendedMovies(data.results || []);
+      setIsLoading(false); // Cambiar el estado a "no cargando"
     } catch (error) {
       // console.error("Error fetching recommended movies:", error);
+      setIsLoading(false); // También lo cambiamos si hay error
     }
   };
 
-  if (!movie) return <p>Loading...</p>;
+  if (isLoading) {
+    return (
+      <div className="bg-neutral-900 text-white">
+        <Skeleton type="movieDetail" />
+        <div className="mt-12 px-4 sm:px-6 lg:px-20">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4">Recommendations</h2>
+          <Skeleton type="recommendations" /> {/* Mostrar el skeleton de recomendaciones */}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-neutral-900 text-white">
       <div
         className="relative p-4 sm:p-6 lg:p-20 bg-cover bg-center rounded-lg"
         style={{
-          backgroundImage: `url('https://image.tmdb.org/t/p/w500${movie.backdrop_path}')`,
+          backgroundImage: `url('https://image.tmdb.org/t/p/w500${movie?.backdrop_path}')`,
         }}
       >
         {/* Fondo oscuro */}
@@ -72,14 +85,14 @@ const MovieDetail = (): JSX.Element => {
           {/* Imagen y botón de tráiler */}
           <div className="w-full md:w-auto flex flex-col items-center">
             <Image
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
+              src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
+              alt={movie?.title || ""}
               width={300}
               height={450}
               className="rounded-lg shadow-lg w-full md:w-auto"
             />
             <a
-              href={movie.trailer_url}
+              href={movie?.trailer_url}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full"
@@ -93,28 +106,26 @@ const MovieDetail = (): JSX.Element => {
           {/* Información de la película */}
           <div className="flex flex-col gap-4 w-full">
             <h1 className="text-2xl sm:text-4xl font-bold">
-              {movie.title}{" "}
-              {movie.release_date
-                ? `(${movie.release_date.split("-")[0]})`
-                : ""}
+              {movie?.title}{" "}
+              {movie?.release_date ? `(${movie?.release_date.split("-")[0]})` : ""}
             </h1>
             <p className="text-sm text-gray-300">
-              {movie.release_date} • {movie.runtime} min
+              {movie?.release_date} • {movie?.runtime} min
             </p>
             <h3 className="text-lg sm:text-xl font-semibold">Overview</h3>
             <p className="text-gray-400 text-sm sm:text-base">
-              {movie.overview}
+              {movie?.overview}
             </p>
 
             {/* Rating y Favoritos */}
             <div className="flex items-center justify-between gap-6">
-              <Rating rating={movie.vote_average} variant="large" />
-              <FavoriteButton movieId={movie.id} variant="large" />
+              <Rating rating={movie?.vote_average || 0} variant="large" />
+              <FavoriteButton movieId={movie?.id || 0} variant="large" />
             </div>
 
             {/* Géneros */}
             <div className="flex flex-wrap gap-2 mt-4">
-              {movie.genres.map((genre) => (
+              {movie?.genres.map((genre) => (
                 <span
                   key={genre.id}
                   className="px-3 py-1 border border-yellow-400 rounded-md text-yellow-400 text-sm hover:text-black hover:bg-yellow-400"
