@@ -21,8 +21,10 @@ export default function RootLayout({
         <title>Quikbet Movies</title>
       </Head>
       <body className={inter.className}>
+        <main>
           <NavBar />
           {children}
+        </main>
       </body>
     </html>
   );
