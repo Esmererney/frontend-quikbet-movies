@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Movie } from "../../types/movie"; // Asegúrate de tener tu interfaz Movie definida.
 import MoviesRender from "../../component/MoviesRender"; // Componente para marcar como favorito.
 import BackButton from "../../component/BackButton"; // Componente para ir atrás.
@@ -23,7 +23,7 @@ const FavoritesPage = (): JSX.Element => {
             );
 
             if (!response.ok) {
-              return (`Failed to fetch movie with ID ${movieId}`);
+              return `Failed to fetch movie with ID ${movieId}`;
             }
 
             const data: Movie = await response.json();

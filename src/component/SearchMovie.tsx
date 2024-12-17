@@ -14,7 +14,6 @@ export default function Search({
 }: SearchMovieProps): JSX.Element {
   const [query, setQuery] = useState<string>("");
   const [genres, setGenres] = useState<Gender[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
 
   useEffect(() => {
     const url = "https://api.themoviedb.org/3/genre/movie/list?language=en-US";
@@ -45,7 +44,6 @@ export default function Search({
   ): void => {
     const value = parseInt(event.target.value, 10);
     const genreId = isNaN(value) ? null : value;
-    setSelectedGenre(genreId);
     onGenreChange(genreId); // Notificar al componente padre
   };
 

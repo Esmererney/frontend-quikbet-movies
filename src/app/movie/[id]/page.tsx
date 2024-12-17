@@ -43,7 +43,7 @@ const MovieDetail = (): JSX.Element => {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=c1aba48feaff17750be529bbf4cda3ee`,
       );
-      const data = await response.json();
+      const data: { results: Movie[] } = await response.json();
       setRecommendedMovies(data.results || []);
       setIsLoading(false); // Cambiar el estado a "no cargando"
     } catch (error) {
@@ -57,8 +57,10 @@ const MovieDetail = (): JSX.Element => {
       <div className="bg-neutral-900 text-white">
         <Skeleton type="movieDetail" />
         <div className="mt-12 px-4 sm:px-6 lg:px-20">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4">Recommendations</h2>
-          <Skeleton type="recommendations" /> {/* Mostrar el skeleton de recomendaciones */}
+          <h2 className="text-xl sm:text-2xl font-bold mb-4">
+            Recommendations
+          </h2>
+          <Skeleton type="recommendations" />
         </div>
       </div>
     );
@@ -107,7 +109,9 @@ const MovieDetail = (): JSX.Element => {
           <div className="flex flex-col gap-4 w-full">
             <h1 className="text-2xl sm:text-4xl font-bold">
               {movie?.title}{" "}
-              {movie?.release_date ? `(${movie?.release_date.split("-")[0]})` : ""}
+              {movie?.release_date
+                ? `(${movie?.release_date.split("-")[0]})`
+                : ""}
             </h1>
             <p className="text-sm text-gray-300">
               {movie?.release_date} • {movie?.runtime} min
@@ -142,33 +146,35 @@ const MovieDetail = (): JSX.Element => {
       <div className="mt-12 px-4 sm:px-6 lg:px-20">
         <h2 className="text-xl sm:text-2xl font-bold mb-4">Recommendations</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
-          {recommendedMovies && recommendedMovies.length > 0 && recommendedMovies.map((recMovie) => (
-            <Link
-              key={`movie-${recMovie.id}`}
-              href={`/movie/${recMovie.id}?id=${recMovie.id}`}
-            >
-              <div
-                key={recMovie.id}
-                className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform"
+          {recommendedMovies &&
+            recommendedMovies.length > 0 &&
+            recommendedMovies.map((recMovie) => (
+              <Link
+                key={`movie-${recMovie.id}`}
+                href={`/movie/${recMovie.id}?id=${recMovie.id}`}
               >
-                <Image
-                  src={`https://image.tmdb.org/t/p/w500${recMovie.poster_path}`}
-                  alt={recMovie.title}
-                  width={200}
-                  height={300}
-                  className="w-full h-60 object-cover"
-                />
-                <div className="p-4 text-center">
-                  <h3 className="text-white text-sm font-semibold truncate">
-                    {recMovie.title}
-                  </h3>
-                  <p className="text-gray-400 text-xs">
-                    {recMovie.release_date}
-                  </p>
+                <div
+                  key={recMovie.id}
+                  className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform"
+                >
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500${recMovie.poster_path}`}
+                    alt={recMovie.title}
+                    width={200}
+                    height={300}
+                    className="w-full h-60 object-cover"
+                  />
+                  <div className="p-4 text-center">
+                    <h3 className="text-white text-sm font-semibold truncate">
+                      {recMovie.title}
+                    </h3>
+                    <p className="text-gray-400 text-xs">
+                      {recMovie.release_date}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
         </div>
       </div>
     </div>

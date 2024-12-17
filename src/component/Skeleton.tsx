@@ -41,7 +41,7 @@ const Skeleton: React.FC<SkeletonProps> = ({ type }) => {
         <div className="w-full h-6 bg-gray-700 rounded"></div>
       </div>
     );
-  };
+  }
 
   if (type === "recommendations") {
     return (
@@ -59,7 +59,7 @@ const Skeleton: React.FC<SkeletonProps> = ({ type }) => {
           </div>
         ))}
       </div>
-    )
+    );
   }
 
   return null;

@@ -18,9 +18,8 @@ module.exports = {
     jest: true,
   },
   ignorePatterns: [".eslintrc.js", "global.d.ts", "jest.base.config.ts"],
-  "prettier/prettier": { endofline: "auto" },
-
   rules: {
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
     "unused-imports/no-unused-imports": "error",
     "no-duplicate-imports": "error",
     "@typescript-eslint/triple-slash-reference": "off",
@@ -83,19 +82,18 @@ module.exports = {
     "@typescript-eslint/unified-signatures": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
-      "warn", // or "error"
+      "warn",
       {
         argsIgnorePattern: "^_",
         varsIgnorePattern: "^_",
         caughtErrorsIgnorePattern: "^_",
       },
     ],
-
     "@typescript-eslint/naming-convention": [
       "error",
       {
         selector: "default",
-        format: ["camelCase"],
+        format: ["camelCase", "PascalCase"],
       },
       {
         selector: "variable",

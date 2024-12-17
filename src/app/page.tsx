@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import RootLayout from "./layout";
-import { Movie } from "../types/movie";
 import SearchMovie from "../component/SearchMovie";
 import Movies from "../component/Movie"; // Componente que muestra las películas
 import Carousel from "../component/Carousel"; // Componente que muestra las películas
@@ -16,7 +14,7 @@ export default function Example(): JSX.Element {
   // Manejadores para actualizar el estado desde `SearchMovie`
   const handleSearch = (newQuery: string): void => setQuery(newQuery);
   const handleGenreSelect = (genreId: number | null): void =>
-  setSelectedGenre(genreId);
+    setSelectedGenre(genreId);
 
   useEffect(() => {
     // Simulando la carga de datos
@@ -24,7 +22,6 @@ export default function Example(): JSX.Element {
       setLoading(false);
     }, 4000); // 2 segundos de carga simulada
   }, []);
-
 
   return (
     <>
@@ -36,12 +33,15 @@ export default function Example(): JSX.Element {
           {loading ? (
             <Skeleton type="search" />
           ) : (
-            <SearchMovie onSearch={handleSearch} onGenreChange={handleGenreSelect} />
+            <SearchMovie
+              onSearch={handleSearch}
+              onGenreChange={handleGenreSelect}
+            />
           )}
         </div>
         {/* Contenedor del contenido dinámico, 70% */}
         <div className="w-full md:w-3/4 p-4 overflow-auto bg-neutral-600">
-            <Movies query={query} genreId={selectedGenre} />
+          <Movies query={query} genreId={selectedGenre} />
         </div>
       </div>
     </>

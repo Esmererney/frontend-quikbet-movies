@@ -7,10 +7,14 @@ import {
   MenuItems,
   MenuButton,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BellIcon,
+  XMarkIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Image from "next/image";
-import { UserCircleIcon } from "@heroicons/react/24/outline"
 
 const navigation = [
   { name: "Popular", href: "/", current: true },
@@ -83,7 +87,7 @@ export default function NavBar(): JSX.Element {
                 <MenuButton className="relative flex rounded-full bg-neutral-950 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                  <UserCircleIcon className="size-8 rounded-full text-white"/>
+                  <UserCircleIcon className="size-8 rounded-full text-white" />
                 </MenuButton>
               </div>
               <MenuItems

@@ -1,16 +1,16 @@
-'use client';
- 
-import { useEffect } from 'react';
- 
-export default function Error({
+"use client";
+
+import { useEffect } from "react";
+
+export default function error({
   error,
   reset,
 }: {
   error: { message: string }; // Cambiado para aceptar solo el mensaje
   reset: () => void;
-}) {
+}): JSX.Element {
   useEffect(() => {
-    console.error(error.message);
+    // console.error(error.message);
   }, [error]);
 
   return (
