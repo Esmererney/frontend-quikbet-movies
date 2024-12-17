@@ -19,12 +19,12 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         <title>Quikbet Movies</title>
+        <meta name="description" content="Explora películas y guarda tus favoritas con CineColombia." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <body className={inter.className}>
-        <main>
           <NavBar />
           {children}
-        </main>
       </body>
     </html>
   );

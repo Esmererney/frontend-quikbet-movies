@@ -27,7 +27,7 @@ export default function Example(): JSX.Element {
 
 
   return (
-    <RootLayout>
+    <>
       <Carousel />
       {/* Cambia de flex-col en móviles a flex-row en pantallas medianas */}
       <div className="bg-gray-100 min-h-screen flex flex-col md:flex-row">
@@ -44,6 +44,6 @@ export default function Example(): JSX.Element {
             <Movies query={query} genreId={selectedGenre} />
         </div>
       </div>
-    </RootLayout>
+    </>
   );
 }
